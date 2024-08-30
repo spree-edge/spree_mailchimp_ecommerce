@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.require_path = 'lib'
 
-  spree_version = '>= 3.3.0', '< 5.0'
+  spree_version = '>= 4.8.0', '< 5.0'
 
   s.add_dependency 'gibbon', '~> 3.3'
   s.add_dependency 'spree_core', spree_version
