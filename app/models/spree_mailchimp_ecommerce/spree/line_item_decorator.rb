@@ -10,6 +10,11 @@ module SpreeMailchimpEcommerce
       def handle_cart
         return unless order.user
 
+        # sync product to Mailchimp
+        product = self.product
+        create_mailchimp_product_if_needed(product)
+
+        # Create or update Mailchimp cart
         order.mailchimp_cart_created ? update_mailchimp_cart : order.create_mailchimp_cart
       end
 
@@ -25,6 +30,12 @@ module SpreeMailchimpEcommerce
 
       def delete_line_item
         ::SpreeMailchimpEcommerce::DeleteLineItemJob.perform_later(id, order_id, order.number)
+      end
+
+      def create_mailchimp_product_if_needed(product)
+        return unless product.mailchimp_product
+        mailchimp_product = ::SpreeMailchimpEcommerce::ProductMailchimpPresenter.new(product).json
+        ::SpreeMailchimpEcommerce::CreateProductJob.perform_later(mailchimp_product)
       end
     end
   end
