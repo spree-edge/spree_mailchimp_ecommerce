@@ -3,6 +3,11 @@ module SpreeMailchimpEcommerce
     module OrderDecorator
       def self.prepended(base)
         base.before_update :create_mailchimp_cart, if: proc { email_changed? }
+
+        # I have moved these two state machine to app order_decorator.rb file.
+        # base.state_machine.after_transition to: :complete, do: :after_create_jobs
+        # base.state_machine.after_transition to: :canceled, do: :after_cancel_jobs
+
       end
 
       def associate_user!(user, override_email = true)
