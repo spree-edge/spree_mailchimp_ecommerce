@@ -11,7 +11,7 @@ module Spree
         if @mailchimp_setting.save
           begin
             ::SpreeMailchimpEcommerce::CreateStoreJob.perform_now(@mailchimp_setting)
-            # ::SpreeMailchimpEcommerce::UploadStoreContentJob.perform_later
+            ::SpreeMailchimpEcommerce::UploadStoreContentJob.perform_later
             @mailchimp_setting.update(mailchimp_account_name: @mailchimp_setting.accout_name)
             redirect_to edit_admin_mailchimp_setting_path(model_class.first.id)
           rescue Gibbon::MailChimpError => e

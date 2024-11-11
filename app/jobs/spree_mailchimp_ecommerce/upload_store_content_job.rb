@@ -14,9 +14,9 @@ module SpreeMailchimpEcommerce
           ::SpreeMailchimpEcommerce::CreateUserJob.perform_now(user.mailchimp_user)
         end
 
-        ::Spree::Order.complete.find_each do |order|
-          ::SpreeMailchimpEcommerce::CreateOrderJob.perform_now(order.mailchimp_order)
-        end
+        # ::Spree::Order.complete.find_each do |order|
+        #   ::SpreeMailchimpEcommerce::CreateOrderJob.perform_now(order.mailchimp_order)
+        # end
 
         ::Spree::Promotion.find_each do |promotion|
           ::SpreeMailchimpEcommerce::CreatePromoRuleJob.perform_now(promotion.mailchimp_promo_rule)
