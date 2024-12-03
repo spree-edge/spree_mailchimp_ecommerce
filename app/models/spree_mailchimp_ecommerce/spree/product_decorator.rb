@@ -22,7 +22,7 @@ module SpreeMailchimpEcommerce
       end
 
       def active_storage_url
-        return "" unless images.any?
+        return "" unless images.first&.attachment.present?
 
         Rails.application.routes.url_helpers.rails_blob_url(images.first&.attachment)
       end
